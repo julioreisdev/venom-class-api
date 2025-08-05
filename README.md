@@ -1,3 +1,5 @@
+<img width="100" height="100" alt="logo" src="https://github.com/user-attachments/assets/d2699dc7-a9ae-4b50-ba76-208c5882e988" />
+
 # Venom Class API
 
 Uma API web simples para integração com o WhatsApp usando [venom-bot](https://github.com/orkestral/venom). Permite gerar QR Code para autenticação, ativar o bot, enviar mensagens e encerrar a sessão via endpoints HTTP.
@@ -82,4 +84,4 @@ MIT
 
 ---
 
-Desenvolvido por Venom Class[Instrutor Júlio Reis](https://github.com/julioreisdev)
+Desenvolvido por Venom Class [Instrutor Júlio Reis](https://github.com/julioreisdev)
