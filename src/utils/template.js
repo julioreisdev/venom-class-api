@@ -1,6 +1,6 @@
 import "dotenv/config";
 
-export function templateHTML() {
+export function template() {
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -194,7 +194,12 @@ export function templateHTML() {
 </html>`;
 }
 
-export function templateResponse(text) {
+export function textResponseInTemplate(text, others) {
+  const qrCode = others?.qrCode
+    ? `<div class="qr-code-container">
+        <img class="qr-code-img" src="${process.env.BASE_URL}/static/qrcode.png" alt="QR Code" />
+      </div>`
+    : "";
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -248,7 +253,8 @@ export function templateResponse(text) {
       padding: 2rem;
       max-width: 700px;
       margin: auto;
-      text-align: center;
+      
+      justify-content: center;
     }
 
     .message {
@@ -259,6 +265,23 @@ export function templateResponse(text) {
       padding: 1.5rem;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .qr-code-img {
+      width: 250px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .qr-code-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+     .flex-center {
+      display: flex;
+      justify-content: center;
     }
 
     .btn-back {
@@ -286,7 +309,10 @@ export function templateResponse(text) {
 
   <main>
     <div class="message">${text}</div>
-    <a  class="btn-back" href="${process.env.BASE_URL}/">← Voltar para a Home</a>
+    ${qrCode}
+    <div class="flex-center">
+      <a class="btn-back" href="${process.env.BASE_URL}/">← Voltar para a Home</a>
+    </div>
   </main>
 </body>
 </html>`;
