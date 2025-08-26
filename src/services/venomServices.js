@@ -34,9 +34,14 @@ function sendText(client, to, body) {
   return client.sendText(to, body);
 }
 
+function exportContacts(client) {
+  return client.getAllContacts();
+}
+
 const venomServices = {
   start,
   sendText,
+  exportContacts,
 };
 
 export default venomServices;

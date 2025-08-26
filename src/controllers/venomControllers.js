@@ -1,4 +1,5 @@
 import venom from "venom-bot";
+import XLSX from "xlsx";
 import "dotenv/config";
 import venomServices from "../services/venomServices.js";
 import { template, textResponseInTemplate } from "../utils/template.js";
@@ -152,12 +153,87 @@ function sendText(req, res) {
   }
 }
 
+// function exportContacts(req, res) {
+//   if (venomClient) {
+//     venomServices
+//       .exportContacts(venomClient)
+//       .then((contacts) => {
+//         // Mapeia para o formato desejado
+//         const formatted = contacts.map((c) => ({
+//           nome:
+//             c.verifiedName || c.name || c.shortName || c.pushname || c.id.user,
+//           telefone: c.id.user || "",
+//         }));
+//         res.json(formatted);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         res
+//           .status(500)
+//           .send(textResponseInTemplate("Erro ao exportar os contatos."));
+//       });
+//   } else {
+//     res
+//       .status(400)
+//       .send(
+//         textResponseInTemplate("Nenhuma conexão ativa para exportar contatos.")
+//       );
+//   }
+// }
+function exportContacts(req, res) {
+  if (venomClient) {
+    venomServices
+      .exportContacts(venomClient)
+      .then((contacts) => {
+        const formatted = contacts.map((c) => ({
+          nome:
+            c.verifiedName || c.name || c.shortName || c.pushname || c.id.user,
+          telefone: c.id.user || "",
+        }));
+
+        // Cria uma planilha XLSX
+        const worksheet = XLSX.utils.json_to_sheet(formatted);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Contatos");
+
+        // Gera o buffer do arquivo
+        const buffer = XLSX.write(workbook, {
+          type: "buffer",
+          bookType: "xlsx",
+        });
+
+        res.setHeader(
+          "Content-Disposition",
+          "attachment; filename=contatos.xlsx"
+        );
+        res.setHeader(
+          "Content-Type",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+        res.send(buffer);
+      })
+      .catch((error) => {
+        console.log(error);
+        res
+          .status(500)
+          .send(textResponseInTemplate("Erro ao exportar os contatos."));
+      });
+  } else {
+    res
+      .status(400)
+      .send(
+        textResponseInTemplate("Nenhuma conexão ativa para exportar contatos.")
+      );
+  }
+}
+
 const venomControllers = {
   connection,
   start,
   stop,
   sendText,
   home,
+  exportContacts,
 };
 
 export default venomControllers;

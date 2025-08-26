@@ -175,6 +175,10 @@ export function template() {
         </form>
       </li>
       <li>
+        Exportar Contatos – <span class="method get">GET</span> 
+        <a href="${process.env.BASE_URL}/export-contacts">${process.env.BASE_URL}/export-contacts</a>
+      </li>
+      <li>
         Desconecta Venom API – <span class="method get">GET</span> 
         <a href="${process.env.BASE_URL}/stop">${process.env.BASE_URL}/stop</a>
       </li>
