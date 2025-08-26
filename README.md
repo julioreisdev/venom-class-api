@@ -20,6 +20,7 @@ Uma API web simples para integração com o WhatsApp usando [venom-bot](https://
 | GET    | `/init`                                   | Gera QR Code para autenticação            |
 | GET    | `/start`                                  | Ativa o bot para escutar mensagens        |
 | GET    | `/send-text/:to/:body`              | Envia mensagem para o número informado    |
+| GET    | `/export-contacts`                                   | Exporta os contatos em XLSX              |
 | GET    | `/stop`                                   | Encerra a sessão do WhatsApp              |
 
 ## Como usar
